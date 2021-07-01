@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Aplicacion de Manejo de Clientes</string>
+
+    <!-- UI Fixed Text -->
+    <string name="modify_client_btn">Modificar</string>
+    <string name="delete_client_btn">Eliminar</string>
+    <string name="adress_list">Lista de direcciones: </string>
+    <string name="addresses">Direcciones: </string>
+    <string name="first_address">Direccion 1: </string>
+    <string name="total_address_number">Numero total de direcciones: </string>
+    <string name="add_new_client">Anadir nuevo cliente</string>
+
+    <!-- API Related -->
+    <string name="api_base_url">test</string>
+
+    <!-- Fragments Tags -->
+    <string name="home_fragment_tag">homeFragmentTag</string>
+    <string name="client_detail_fragment_tag">clientDetailFragmentTag</string>
+
+</resources>

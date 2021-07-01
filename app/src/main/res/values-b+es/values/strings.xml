@@ -1,0 +1,17 @@
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Costumers Management App</string>
+
+    <!-- UI Fixed Text -->
+    <string name="modify_client_btn">Modify</string>
+    <string name="delete_client_btn">Delete</string>
+    <string name="adress_list">Addresses List:</string>
+    <string name="addresses">Addresses: </string>
+    <string name="first_address">Address 1: </string>
+    <string name="total_address_number">Addresses total number: </string>
+
+    <!-- Fragments Tags -->
+    <string name="home_fragment_tag">homeFragmentTag</string>
+    <string name="client_detail_fragment_tag">clientDetailFragmentTag</string>
+
+</resources>
