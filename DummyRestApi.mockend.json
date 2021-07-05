@@ -1,6 +1,0 @@
-{
-  "Client": {
-    "name": "string",
-    "addressList": "string[]"
-  }
-}
