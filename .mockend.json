@@ -2,6 +2,9 @@
 {
   "Client": {
     "name": "string",
-    "addressList": "string[]"
+    "addressList": "AddressList[]"
+  },
+  "AddressList": {
+    "adress": "string"
   }
 }
