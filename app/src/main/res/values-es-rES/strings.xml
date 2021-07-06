@@ -13,7 +13,7 @@
     <string name="add_new_client">Anadir nuevo cliente</string>
 
     <!-- API Related -->
-    <string name="api_base_url">test</string>
+    <string name="api_base_url">https://my-json-server.typicode.com/chazzychazz18/demo/</string>
 
     <!-- Fragments Tags -->
     <string name="home_fragment_tag">homeFragmentTag</string>

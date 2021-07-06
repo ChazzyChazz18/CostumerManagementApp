@@ -12,8 +12,4 @@ public class ClientResponse {
         return data;
     }
 
-    /*public void setData(ArrayList<Client> data) {
-        this.data = data;
-    }*/
-
 }

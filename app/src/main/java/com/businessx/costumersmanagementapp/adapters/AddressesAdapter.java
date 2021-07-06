@@ -11,12 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.businessx.costumersmanagementapp.R;
+import com.businessx.costumersmanagementapp.models.Address;
 
 import java.util.ArrayList;
 
 public class AddressesAdapter extends RecyclerView.Adapter<AddressesAdapter.ViewHolder> {
 
-    private final ArrayList<String> dataset;
+    private final ArrayList<Address> dataset;
     private final Context context;
 
     public AddressesAdapter(Context context) {
@@ -36,11 +37,11 @@ public class AddressesAdapter extends RecyclerView.Adapter<AddressesAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        final String address = dataset.get(i);
-        viewHolder.addressText.setText(address);
+        final Address address = dataset.get(i);
+        viewHolder.addressText.setText(address.getFullAddress());
 
         viewHolder.itemView.setOnClickListener(v -> {
-            Toast.makeText(context, address, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, address.getFullAddress(), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -49,7 +50,7 @@ public class AddressesAdapter extends RecyclerView.Adapter<AddressesAdapter.View
         return dataset.size();
     }
 
-    public void addAddressList (ArrayList<String> addressList) {
+    public void addAddressList (ArrayList<Address> addressList) {
         dataset.addAll(addressList);
         notifyDataSetChanged();
     }

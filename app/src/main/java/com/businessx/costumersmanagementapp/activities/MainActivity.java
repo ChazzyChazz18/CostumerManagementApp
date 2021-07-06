@@ -10,6 +10,8 @@ import com.businessx.costumersmanagementapp.R;
 import com.businessx.costumersmanagementapp.fragments.ClientDetailFragment;
 import com.businessx.costumersmanagementapp.fragments.HomeFragment;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
@@ -31,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("My Activity title");
+
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         initializeFragments();
     }

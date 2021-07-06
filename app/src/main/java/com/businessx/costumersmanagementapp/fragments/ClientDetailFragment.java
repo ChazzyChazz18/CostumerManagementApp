@@ -32,10 +32,11 @@ public class ClientDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_client_detail, container, false);
 
+        // Setup the views references
         setupViews(view);
-
         setupRecyclerview(view);
 
+        // Handle all the OnClick events
         handleOnclickEvents();
 
         return view;
@@ -74,8 +75,8 @@ public class ClientDetailFragment extends Fragment {
     }
 
     private void setViewsData () {
-        clientNameTextview.setText(selectedClient.getName());
-        String clientAdressNumberStr = getString(R.string.total_address_number) + selectedClient.getAdressListSizeStr();
+        clientNameTextview.setText(selectedClient.getFullName());
+        String clientAdressNumberStr = getString(R.string.total_address_number) + " " + selectedClient.getAdressListSizeStr();
         clientAddressNumberTextview.setText(clientAdressNumberStr);
         addressesAdapter.addAddressList(selectedClient.getAddressList());
     }

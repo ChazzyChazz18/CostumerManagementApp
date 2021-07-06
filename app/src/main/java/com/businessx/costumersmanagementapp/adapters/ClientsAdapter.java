@@ -44,12 +44,12 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
         final Client client = dataset.get(i);
-        viewHolder.clientName.setText(client.getName());
+        viewHolder.clientName.setText(client.getFullName());
         viewHolder.clientAdressListNumber.setText(
                 concatText(context.getString(R.string.addresses), client.getAdressListSizeStr())
         );
         viewHolder.clientFirstAdress.setText(
-                concatText(context.getString(R.string.first_address), client.getAddressList().get(0))
+                concatText(context.getString(R.string.first_address), client.getAddressList().get(0).getFullAddress())
         );
 
         viewHolder.itemView.setOnClickListener(v -> {

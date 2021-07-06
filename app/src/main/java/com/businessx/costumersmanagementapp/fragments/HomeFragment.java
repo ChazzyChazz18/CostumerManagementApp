@@ -1,7 +1,6 @@
 package com.businessx.costumersmanagementapp.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +18,13 @@ import com.businessx.costumersmanagementapp.adapters.ClientsAdapter;
 import com.businessx.costumersmanagementapp.api_service.ApiService;
 import com.businessx.costumersmanagementapp.api_service.ClientResponse;
 import com.businessx.costumersmanagementapp.models.Client;
+import com.businessx.costumersmanagementapp.retrofit.RetrofitClient;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class HomeFragment extends Fragment {
 
@@ -40,13 +36,14 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        // Set up all the views reference
         setupViews(view);
-
         setupRecyclerview(view);
 
-        //loadRecyclerviewData();
-        testData();
+        // Get the data from the RestApi to the Recyclerview
+        loadRecyclerviewData();
 
+        // Handle all the Onclick events on this fragment
         handleOnclickEvents();
 
         return view;
@@ -72,30 +69,13 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void testData () {
-        int i;
-        int totalTestUsers = 50;
-        ArrayList<Client> clientsArrayTest = new ArrayList<>();
-        ArrayList<String> clientsAddressArrayTest = new ArrayList<>();
-
-        clientsAddressArrayTest.add("Calle Sabaneta #39 Esanchez Mano Guallabo");
-        clientsAddressArrayTest.add("Calle Trinidad #09 Ciudad Nueva");
-        clientsAddressArrayTest.add("Calle 28 #56 Ensanchez Isabelita");
-        for (i = 0; i < totalTestUsers; i++){
-            clientsArrayTest.add(new Client("Cliente " + (i+1), clientsAddressArrayTest));
-        }
-
-        clientsAdapter.addClientList(clientsArrayTest);
-    }
-
     private void loadRecyclerviewData () {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.api_base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        //String TAG = "Debugging";
 
-        ApiService service = retrofit.create(ApiService.class);
+        RetrofitClient.getClient(getString(R.string.api_base_url));
+
+        ApiService service = RetrofitClient.getRetrofit().create(ApiService.class);
         Call<ClientResponse> clientResponseCall = service.obtainClientList();
 
         clientResponseCall.enqueue(new Callback<ClientResponse>() {
@@ -112,13 +92,16 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 } else { // If there is response but is unsuccessful
-                    Log.e(TAG, "onResponse: " + response.errorBody());
+                    //Log.e(TAG, "onResponse: " + response.errorBody());
+                    assert response.errorBody() != null;
+                    Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(@NonNull Call<ClientResponse> call,@NonNull Throwable t) {
                 // If there is not response and something happened
-                Log.e(TAG, " onFailure: " + t.getMessage());
+                //Log.e(TAG, " onFailure: " + t.getMessage());
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
