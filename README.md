@@ -1,2 +1,2 @@
-# CostumerManagementApp
-A simple costumer management app developed in android with java
+# CustomerManagementApp
+A simple customer management app developed in android with java
