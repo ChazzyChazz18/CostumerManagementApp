@@ -11,16 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.businessx.costumersmanagementapp.R;
 import com.businessx.costumersmanagementapp.adapters.AddressesAdapter;
 import com.businessx.costumersmanagementapp.models.Client;
+import com.businessx.costumersmanagementapp.viewModel.SharedViewModel;
 
 public class ClientDetailFragment extends Fragment {
 
-    private Client selectedClient;
     private TextView clientNameTextview;
     private TextView clientAddressNumberTextview;
     private AddressesAdapter addressesAdapter;
@@ -38,6 +39,11 @@ public class ClientDetailFragment extends Fragment {
 
         // Handle all the OnClick events
         handleOnclickEvents();
+
+        SharedViewModel model = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+        // Update the UI.
+        model.getSelectedClient().observe(getViewLifecycleOwner(), this::setViewsData);
 
         return view;
     }
@@ -69,16 +75,11 @@ public class ClientDetailFragment extends Fragment {
         });
     }
 
-    public void setSelectedClient (Client client) {
-        selectedClient = client;
-        setViewsData();
-    }
-
-    private void setViewsData () {
-        clientNameTextview.setText(selectedClient.getFullName());
-        String clientAdressNumberStr = getString(R.string.total_address_number) + " " + selectedClient.getAdressListSizeStr();
+    private void setViewsData (Client client) {
+        clientNameTextview.setText(client.getFullName());
+        String clientAdressNumberStr = getString(R.string.total_address_number) + " " + client.getAdressListSizeStr();
         clientAddressNumberTextview.setText(clientAdressNumberStr);
-        addressesAdapter.addAddressList(selectedClient.getAddressList());
+        addressesAdapter.addAddressList(client.getAddressList());
     }
 
 }

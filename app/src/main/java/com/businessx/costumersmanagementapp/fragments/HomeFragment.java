@@ -4,21 +4,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.businessx.costumersmanagementapp.R;
 import com.businessx.costumersmanagementapp.adapters.ClientsAdapter;
-import com.businessx.costumersmanagementapp.api_service.ApiService;
-import com.businessx.costumersmanagementapp.api_service.ClientResponse;
+import com.businessx.costumersmanagementapp.apiService.ApiService;
+import com.businessx.costumersmanagementapp.apiService.ClientResponse;
 import com.businessx.costumersmanagementapp.models.Client;
 import com.businessx.costumersmanagementapp.retrofit.RetrofitClient;
+import com.businessx.costumersmanagementapp.viewModel.SharedViewModel;
 
 import java.util.ArrayList;
 
@@ -28,13 +31,19 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
+    private SharedViewModel model;
+
     private ClientsAdapter clientsAdapter;
     private AppCompatButton addClientBtn;
+
+    private ProgressBar circularProgress;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        model = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         // Set up all the views reference
         setupViews(view);
@@ -51,11 +60,12 @@ public class HomeFragment extends Fragment {
 
     private void setupViews (View view) {
         addClientBtn = view.findViewById(R.id.add_client_btn);
+        circularProgress = view.findViewById(R.id.progress_circular);
     }
 
     private void setupRecyclerview (View view) {
         RecyclerView recyclerView = view.findViewById(R.id.fragment_home_recyclerview);
-        clientsAdapter = new ClientsAdapter(getContext());
+        clientsAdapter = new ClientsAdapter(getContext(), model);
         recyclerView.setAdapter(clientsAdapter);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -88,6 +98,7 @@ public class HomeFragment extends Fragment {
                         ArrayList<Client> clientsList = clientResponse.getData();
 
                         if (clientsList != null) {
+                            circularProgress.setVisibility(View.GONE);
                             clientsAdapter.addClientList(clientsList);
                         }
                     }

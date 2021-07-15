@@ -8,12 +8,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.businessx.costumersmanagementapp.activities.MainActivity;
 import com.businessx.costumersmanagementapp.R;
-import com.businessx.costumersmanagementapp.fragments.ClientDetailFragment;
 import com.businessx.costumersmanagementapp.models.Client;
+import com.businessx.costumersmanagementapp.viewModel.SharedViewModel;
 
 import java.util.ArrayList;
 
@@ -21,9 +22,11 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
 
     private final ArrayList<Client> dataset;
     private final Context context;
+    private final SharedViewModel model;
 
-    public ClientsAdapter(Context context) {
+    public ClientsAdapter(Context context, SharedViewModel model) {
         this.context = context;
+        this.model = model;
         dataset = new ArrayList<>();
     }
 
@@ -53,9 +56,14 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
         );
 
         viewHolder.itemView.setOnClickListener(v -> {
+            model.selectClient(client);
+
             Fragment clientDetailFrag = ((MainActivity)context).getClientDetailFragment();
-            ((ClientDetailFragment)clientDetailFrag).setSelectedClient(client);
-            ((MainActivity)context).showSelectedFragment(clientDetailFrag);
+            FragmentTransaction fragmentTransaction = ((MainActivity) context).getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container,clientDetailFrag);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
         });
     }
 
@@ -68,13 +76,6 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
         dataset.addAll(clientList);
         notifyDataSetChanged();
     }
-
-    /*public void clearClientList () {
-        if(dataset.size() > 0) {
-            dataset.clear();
-            notifyDataSetChanged();
-        }
-    }*/
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 

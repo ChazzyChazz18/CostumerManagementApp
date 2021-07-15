@@ -1,4 +1,4 @@
-package com.businessx.costumersmanagementapp.api_service;
+package com.businessx.costumersmanagementapp.apiService;
 
 import com.businessx.costumersmanagementapp.models.Client;
 
