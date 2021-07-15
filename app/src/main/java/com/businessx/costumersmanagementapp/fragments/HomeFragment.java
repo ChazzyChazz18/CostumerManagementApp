@@ -41,7 +41,12 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         model = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
@@ -54,8 +59,6 @@ public class HomeFragment extends Fragment {
 
         // Handle all the Onclick events on this fragment
         handleOnclickEvents();
-
-        return view;
     }
 
     private void setupViews (View view) {
